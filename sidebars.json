@@ -1,0 +1,16 @@
+{
+  "docs": {
+    "Getting Started": ["Introduction", "installation", "Motivation"],
+    "Examples": ["hello-world-example", "renderer_example", "event-example"],
+    "Core Concepts": ["dependencies", "typing", "creatingPlugin", "events"],
+    "Api References": [
+      "api-ref",
+      "plugin",
+      "iPlugin",
+      "pluginStore",
+      "rendererPlugin"
+    ],
+    "Tips and Tricks": ["naming-convention"]
+  },
+  "docs-other": {}
+}
