@@ -77,6 +77,10 @@ yarn add react-pluggable
     <span class="hljs-keyword">return</span> <span class="hljs-string">"ShowAlert Plugin"</span>;
   }
 
+  getDependencies(): string[] {
+    <span class="hljs-keyword">return</span> [];
+  }
+
   init(pluginStore: PluginStore): <span class="hljs-keyword">void</span> {
     <span class="hljs-keyword">this</span>.pluginStore = pluginStore;
   }
@@ -100,6 +104,7 @@ yarn add react-pluggable
 <span class="hljs-keyword">import</span> <span class="hljs-string">"./App.css"</span>;
 <span class="hljs-keyword">import</span> { createPluginStore, PluginProvider } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-pluggable"</span>;
 <span class="hljs-keyword">import</span> ShowAlertPlugin <span class="hljs-keyword">from</span> <span class="hljs-string">"./plugins/ShowAlertPlugin"</span>;
+<span class="hljs-keyword">import</span> Example <span class="hljs-keyword">from</span> <span class="hljs-string">"./components/Example"</span>;
 
 <span class="hljs-keyword">const</span> pluginStore = createPluginStore();
 pluginStore.install(<span class="hljs-keyword">new</span> ShowAlertPlugin());
