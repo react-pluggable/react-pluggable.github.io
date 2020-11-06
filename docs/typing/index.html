@@ -57,107 +57,59 @@
         </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Typing</h1></header><article><div><span><p>Why typing ?</p>
 <p>It is used to type-hint the method arguments wherever you are using it. For example, when you are using useEffect in react, it type-hints itself that it contains 2 arguments: function and array. With the help of type-hints, users who don't know about the detail of the method definition can use it.</p>
 <ol>
-<li>We can type-hint any method of a Plugin class by exporting its type. Let us say, we have a sendAlert method in ClickMePlugin class whose type we want to export.</li>
+<li>We can type-hint any method of a Plugin class by exporting its type</li>
 </ol>
+<p>Let's say, we have a sendAlert method in ClickMePlugin class whose type we want to export.</p>
 <p>ClickMePlugin.tsx</p>
-<pre><code class="hljs css language-bash">import React from <span class="hljs-string">"react"</span>;
-import { IPlugin, PluginStore } from <span class="hljs-string">"react-pluggable"</span>;
+<pre><code class="hljs css language-jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClickMePlugin</span> <span class="hljs-title">implements</span> <span class="hljs-title">IPlugin</span> </span>{
 
-class ClickMePlugin implements IPlugin {
-  namespace = <span class="hljs-string">"ClickMe"</span>;
-
-  getPluginName(): string {
-    <span class="hljs-built_in">return</span> `<span class="hljs-variable">${this.namespace}</span>@1.1.0`;
-  }
-  getDependencies(): string[] {
-    <span class="hljs-built_in">return</span> [];
-  }
-
-  public pluginStore: any;
-
-  init(pluginStore: PluginStore): void {
-    this.pluginStore = pluginStore;
-  }
-
-  activate(): void {
-    this.pluginStore.addFunction(
-      `<span class="hljs-variable">${this.namespace}</span>.sendAlert`,
+  activate(): <span class="hljs-keyword">void</span> {
+    <span class="hljs-keyword">this</span>.pluginStore.addFunction(
+      <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.namespace}</span>.sendAlert`</span>,
       (msg: string) =&gt; {
         alert(msg);
       }
     );
   }
 
-  deactivate(): void {
-    this.pluginStore.removeFunction(`<span class="hljs-variable">${this.namespace}</span>.sendAlert`);
-  }
+  <span class="hljs-comment">//rest of the code</span>
 }
 
-<span class="hljs-built_in">export</span> default ClickMePlugin;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> ClickMePlugin;
 
-<span class="hljs-built_in">type</span> PluginStoreClickMe = {
-  executeFunction(functionName: `ClickMe.add`, msg: string): void;
+type PluginStoreClickMe = {
+  executeFunction(functionName: <span class="hljs-string">`ClickMe.add`</span>, <span class="hljs-attr">msg</span>: string): <span class="hljs-keyword">void</span>;
 };
 
-<span class="hljs-built_in">export</span> <span class="hljs-built_in">type</span> { PluginStoreClickMe };
+<span class="hljs-keyword">export</span> type { PluginStoreClickMe };
 </code></pre>
+<p><br/></p>
 <ol start="2">
 <li>When building a complex app, we have many types exporting from each Plugin so it is difficult to import all the types again and again wherever we want to use pluginStore. So we create a type by combining all the plugins and use it as a single type as shown in the types.tsx.</li>
 </ol>
 <p>types.ts</p>
-<pre><code class="hljs css language-bash">import { PluginStore } from <span class="hljs-string">"react-pluggable"</span>;
-import { PluginStoreClickMe } from <span class="hljs-string">"./plugins/ClickMePlugin"</span>;
+<pre><code class="hljs css language-jsx"><span class="hljs-keyword">import</span> { PluginStore } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-pluggable"</span>;
+<span class="hljs-keyword">import</span> { PluginStoreClickMe } <span class="hljs-keyword">from</span> <span class="hljs-string">"./plugins/ClickMePlugin"</span>;
 
-<span class="hljs-built_in">export</span> <span class="hljs-built_in">type</span> PluginStoreWithPlugins = PluginStore &amp; PluginStoreClickMe;
+<span class="hljs-keyword">export</span> type PluginStoreWithPlugins = PluginStore &amp; PluginStoreClickMe;
 </code></pre>
+<p><br/></p>
 <ol start="3">
-<li>Now when we can declare the type of PluginStore as PluginStoreWithPlugins while creating pluginStore (see App.tsx), it will give all the types contained in PluginStoreWithPlugins to pluginStore.</li>
+<li>Now when we declare the type of PluginStore as PluginStoreWithPlugins while creating (see App.tsx) or retrieving(see Test.tsx) pluginStore, it will import all the types contained in PluginStoreWithPlugins to pluginStore.</li>
 </ol>
 <p>App.tsx</p>
-<pre><code class="hljs css language-bash">import React from <span class="hljs-string">"react"</span>;
-import { createPluginStore, PluginProvider } from <span class="hljs-string">"react-pluggable"</span>;
-import ClickMePlugin from <span class="hljs-string">"./plugins/ClickMePlugin"</span>;
-import Test from <span class="hljs-string">"./components/Test"</span>;
-import { PluginStoreWithPlugins } from <span class="hljs-string">"./types"</span>;
+<pre><code class="hljs css language-jsx"><span class="hljs-keyword">import</span> { PluginStoreWithPlugins } <span class="hljs-keyword">from</span> <span class="hljs-string">"./types"</span>;
 
-const pluginStore: PluginStoreWithPlugins = createPluginStore();    line 1
-pluginStore.install(new ClickMePlugin());
-
-<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">App</span></span>() {
-  <span class="hljs-built_in">return</span> (
-    &lt;PluginProvider pluginStore={pluginStore}&gt;
-      &lt;Test /&gt;
-    &lt;/PluginProvider&gt;
-  );
-}
-
-<span class="hljs-built_in">export</span> default App;
+<span class="hljs-keyword">const</span> pluginStore: PluginStoreWithPlugins = createPluginStore();
 </code></pre>
 <p>Test.tsx</p>
-<pre><code class="hljs css language-bash">import * as React from <span class="hljs-string">"react"</span>;
-import { usePluginStore } from <span class="hljs-string">"react-pluggable"</span>;
-import { PluginStoreWithPlugins } from <span class="hljs-string">"../types"</span>;
+<pre><code class="hljs css language-jsx"><span class="hljs-keyword">const</span> Test = <span class="hljs-function">(<span class="hljs-params">props: any</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> pluginStore: PluginStoreWithPlugins = usePluginStore();
 
-const Test = (props: any) =&gt; {
-  const pluginStore: PluginStoreWithPlugins = usePluginStore();
-
-  pluginStore.executeFunction(<span class="hljs-string">"test"</span>, 1, 2);
-  <span class="hljs-built_in">return</span> (
-    &lt;&gt;
-      &lt;h1&gt;Working&lt;/h1&gt;
-      &lt;button
-        onClick={() =&gt; {
-          pluginStore.executeFunction(<span class="hljs-string">"ClickMe.add"</span>, <span class="hljs-string">"Typing in Pluggable"</span>);
-        }}
-      &gt;
-        Send Alert
-      &lt;/button&gt;
-    &lt;/&gt;
-  );
+  <span class="hljs-comment">//code</span>
 };
-
-<span class="hljs-built_in">export</span> default Test;
 </code></pre>
-<p>So whenever you write pluginStore.executeFunction(), it will give you a hint of putting arguments inside it as shown in the image below.</p>
+<p><br/><br/>
+So whenever you write pluginStore.executeFunction(), it will give you a hint of putting arguments inside it as shown below.</p>
 <p><img src="/docs/assets/images/typing.png" alt="alt-text"></p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/dependencies"><span class="arrow-prev">← </span><span>Dependencies</span></a><a class="docs-next button" href="/docs/creatingPlugin"><span>How to create a Plugin</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/homeIcon.png" alt="React Pluggable" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/Introduction.html">Getting Started</a><a href="/docs/hello-world-example.html">Examples</a><a href="/docs/api-ref.html">API References</a></div><div><h5>Community</h5><a href="https://twitter.com/geekyants" target="_blank" rel="noreferrer noopener">Twitter</a></div><div><h5>More</h5><a href="https://github.com/GeekyAnts/react-pluggable">GitHub</a><a class="github-button" href="https://github.com/GeekyAnts/react-pluggable/stargazers" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div><div><a href="https://geekyants.com/" target="_blank" rel="noreferrer noopener">Built with ❤️ at GeekyAnts.</a></div></section><section class="copyright">Copyright © 2020 React Pluggable.</section></footer></div></body></html>

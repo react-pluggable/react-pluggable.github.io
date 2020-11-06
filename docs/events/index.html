@@ -57,105 +57,42 @@
         </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Events</h1></header><article><div><span><p>Events are the things that happen to your app and handlers are the functions that are executed in response to an event. We can use events to communicate between the plugins.</p>
 <p>An example of events and handlers: Let's say we are using the Authentication plugin and we want to perform some operation as soon as the user authentication is done.</p>
 <p><strong>Example</strong></p>
-<p>Here, we are adding an event &quot;ClickMe.hello&quot; to the pluginStore. You can refer to naming event naming conventions <a href="https://www.notion.so/geekyants/Naming-Convention-f4c81804762545ac9db14a68bf07bea5#cbd1f4a4d9a54ccba2096c8ad08ae068">here</a>.</p>
-<p>ClickMePlugin.tsx</p>
+<p>Here, we are adding an event authentication of the Auth plugin to the pluginStore. For naming events, you can refer to naming conventions <a href="https://www.notion.so/geekyants/Naming-Convention-f4c81804762545ac9db14a68bf07bea5#cbd1f4a4d9a54ccba2096c8ad08ae068">here</a>.</p>
+<p>AuthPlugin.tsx</p>
 <pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
 <span class="hljs-keyword">import</span> { IPlugin, PluginStore, Event } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-pluggable"</span>;
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClickMePlugin</span> <span class="hljs-title">implements</span> <span class="hljs-title">IPlugin</span> {</span>
-  public namespace = <span class="hljs-string">"ClickMe"</span>;
-
-  getPluginName(): string {
-    <span class="hljs-keyword">return</span> `<span class="javascript">${<span class="hljs-keyword">this</span>.namespace}@<span class="hljs-number">1.0</span><span class="hljs-number">.0</span></span>`;
-  }
-  getDependencies(): string[] {
-    <span class="hljs-keyword">return</span> [];
-  }
-
-  public pluginStore: any;
-
-  init(pluginStore: PluginStore): void {
-    <span class="hljs-keyword">this</span>.pluginStore = pluginStore;
-  }
-
-  activate(): void {
-    <span class="hljs-keyword">this</span>.pluginStore.addEventListener(<span class="hljs-string">"ClickMe.hello"</span>, <span class="hljs-function"><span class="hljs-params">(event: any)</span> =&gt;</span> {
+<span class="hljs-keyword">class</span> AuthPlugin <span class="hljs-keyword">implements</span> IPlugin {
+  activate(): <span class="hljs-built_in">void</span> {
+    <span class="hljs-keyword">this</span>.pluginStore.addEventListener(<span class="hljs-string">"Auth.authentication"</span>, <span class="hljs-function">(<span class="hljs-params">event: <span class="hljs-built_in">any</span></span>) =&gt;</span> {
       <span class="hljs-built_in">console</span>.log(event);
-      event.stopPropagation();
     });
 
-    <span class="hljs-keyword">this</span>.pluginStore.addEventListener(<span class="hljs-string">"ClickMe.hello"</span>, <span class="hljs-function"><span class="hljs-params">(event: any)</span> =&gt;</span> {
-      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Event received second time: "</span>, event);
+    <span class="hljs-keyword">this</span>.pluginStore.addEventListener(<span class="hljs-string">"Auth.authentication"</span>, <span class="hljs-function">(<span class="hljs-params">event: <span class="hljs-built_in">any</span></span>) =&gt;</span> {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Authentication successful "</span>, event);
     });
-
-    <span class="hljs-keyword">this</span>.pluginStore.executeFunction(<span class="hljs-string">"Renderer.add"</span>, <span class="hljs-string">"top"</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> (
-      &lt;&gt;
-        &lt;h1&gt;Event Handler&lt;/h1&gt;
-        &lt;button
-          onClick={() =&gt; {
-            <span class="hljs-keyword">this</span>.pluginStore.dispatchEvent(
-              <span class="hljs-keyword">new</span> Event(`<span class="javascript">${<span class="hljs-keyword">this</span>.namespace}.hello</span>`)
-            );
-          }}
-        &gt;
-          Login
-        &lt;/button&gt;
-      &lt;/&gt;
-    ));
   }
 
-  deactivate(): void {
-    <span class="hljs-keyword">this</span>.pluginStore.removeFunction(<span class="hljs-string">"ClickMe.sendAlert"</span>);
-  }
+  <span class="hljs-comment">//rest of the code</span>
 }
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> ClickMePlugin;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> AuthPlugin;
 </code></pre>
-<p>Note: We import &quot;Event&quot; from &quot;react-pluggable&quot;, or else will get the type of Javascript's default Event class which doesn't work with plugins.</p>
-<p><a href="https://www.notion.so/geekyants/PluginStore-API-0d45505ee82c42eba79d5456b5369ea4#9580635f32c344c2908c5823bcfb39ff">addEventListener</a> is used to add a callback against a particular event and <a href="https://www.notion.so/geekyants/PluginStore-API-0d45505ee82c42eba79d5456b5369ea4#a04680ff2a834574bc15ad559a1c77da">dispatchEvent</a> is used to trigger an event.</p>
-<p>Adding plugin to the app</p>
-<p>App.tsx</p>
-<pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">"./App.css"</span>;
-<span class="hljs-keyword">import</span> {
-  createPluginStore,
-  PluginProvider,
-  RendererPlugin,
-} <span class="hljs-keyword">from</span> <span class="hljs-string">"react-pluggable"</span>;
-<span class="hljs-keyword">import</span> ClickMePlugin <span class="hljs-keyword">from</span> <span class="hljs-string">"./plugins/ClickMePlugin"</span>;
-<span class="hljs-keyword">import</span> Test <span class="hljs-keyword">from</span> <span class="hljs-string">"./components/Test"</span>;
-
-<span class="hljs-keyword">const</span> pluginStore = createPluginStore();
-pluginStore.install(<span class="hljs-keyword">new</span> RendererPlugin());
-pluginStore.install(<span class="hljs-keyword">new</span> ClickMePlugin());
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-keyword">return</span> (
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">PluginProvider</span> <span class="hljs-attr">pluginStore</span>=<span class="hljs-string">{pluginStore}</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-name">Test</span> /&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">PluginProvider</span>&gt;</span></span>
-  );
-}
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App;
-</code></pre>
-<p>Test.tsx</p>
+<p>Note: We have to import &quot;Event&quot; from &quot;react-pluggable&quot;, or else will get the type of Javascript's default Event class which doesn't work with plugins.</p>
+<p><a href="/docs/pluginStore#addeventlistener">addEventListener</a> is used to add a callback against a particular event and <a href="/docs/pluginStore#dispatchevent">dispatchEvent</a> is used to trigger an event.</p>
+<p>Dispatching event from the target component</p>
+<p>Login.tsx</p>
 <pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
 <span class="hljs-keyword">import</span> { usePluginStore } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-pluggable"</span>;
 
-<span class="hljs-keyword">const</span> Test = <span class="hljs-function">(<span class="hljs-params">props: any</span>) =&gt;</span> {
-  <span class="hljs-keyword">const</span> pluginStore: any = usePluginStore();
+<span class="hljs-keyword">const</span> Login = <span class="hljs-function">(<span class="hljs-params">props: <span class="hljs-built_in">any</span></span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> pluginStore: <span class="hljs-built_in">any</span> = usePluginStore();
 
-  <span class="hljs-keyword">let</span> Renderer = pluginStore.executeFunction(<span class="hljs-string">"Renderer.getRendererComponent"</span>);
+  pluginStore.dispatchEvent(<span class="hljs-keyword">new</span> Event(<span class="hljs-string">"Auth.authentication"</span>));
 
-  <span class="hljs-keyword">return</span> (
-    <span class="xml"><span class="hljs-tag">&lt;&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-name">Renderer</span> <span class="hljs-attr">placement</span>=<span class="hljs-string">{</span>"<span class="hljs-attr">top</span>"} /&gt;</span>
-    <span class="hljs-tag">&lt;/&gt;</span></span>
-  );
+  <span class="hljs-comment">//rest of the code</span>
 };
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Test;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Login;
 </code></pre>
-<p>It will render a Login button and on clicking on Login button ClickMe.hello event will be triggered.</p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/creatingPlugin"><span class="arrow-prev">← </span><span>How to create a Plugin</span></a><a class="docs-next button" href="/docs/api-ref"><span>API Overview</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/homeIcon.png" alt="React Pluggable" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/Introduction.html">Getting Started</a><a href="/docs/hello-world-example.html">Examples</a><a href="/docs/api-ref.html">API References</a></div><div><h5>Community</h5><a href="https://twitter.com/geekyants" target="_blank" rel="noreferrer noopener">Twitter</a></div><div><h5>More</h5><a href="https://github.com/GeekyAnts/react-pluggable">GitHub</a><a class="github-button" href="https://github.com/GeekyAnts/react-pluggable/stargazers" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div><div><a href="https://geekyants.com/" target="_blank" rel="noreferrer noopener">Built with ❤️ at GeekyAnts.</a></div></section><section class="copyright">Copyright © 2020 React Pluggable.</section></footer></div></body></html>
