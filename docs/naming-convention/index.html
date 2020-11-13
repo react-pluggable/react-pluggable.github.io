@@ -59,7 +59,8 @@
 <li><strong>Plugin Name</strong>: Let's consider a plugin which provides authentication, named as &quot;Auth&quot;.</li>
 <li><strong>Class Name</strong>: The name of the class will be your plugin name suffixed with 'Plugin' i.e. &quot;AuthPlugin&quot;.</li>
 <li><strong>getPluginName:</strong> When returning the name of the plugin, we add &lt;plugin_name&gt; with '@' and followed by the version ex : Auth@1.0.0 (&lt;plugin_name&gt;@<version>).</li>
-<li><strong>Adding functions</strong>: While functions can be added to pluginStore with any name, to ensure uniqueness across plugins, we recommend the format <code>&lt;plugin_name&gt;.&lt;function_name&gt;</code> ex : Auth.authenticate</li>
+<li><strong>Adding functions</strong>: While functions can be added to pluginStore with any name, to ensure uniqueness across plugins, we recommend the format <code>&lt;plugin_name&gt;.&lt;function_name&gt;</code> Ex : Auth.authenticate</li>
+<li><strong>Events:</strong> Events can be added and dispatched from pluginStore using any name, to show the uniqueness among events that which event belongs to which plugin, we recommend the format <code>&lt;plugin_name&gt;.&lt;event_name&gt;</code> Ex: Auth.checking</li>
 </ol>
 <p><strong>Example :</strong></p>
 <p>AuthPlugin.tsx</p>
