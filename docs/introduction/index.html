@@ -67,11 +67,11 @@ yarn add react-pluggable
 <p>Let us create a plugin which will add alert functionality to the component.</p>
 <p>Create a ShowAlertPlugin and implement it with IPlugin interface.</p>
 <p>ShowAlert<em>Plugin.tsx</em></p>
-<pre><code class="hljs css language-jsx"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
-<span class="hljs-keyword">import</span> { IPlugin, PluginStore } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-pluggable"</span>;
+<pre><code class="hljs css language-jsx"><span class="hljs-keyword">import</span> { IPlugin, PluginStore } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-pluggable"</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ShowAlertPlugin</span> <span class="hljs-title">implements</span> <span class="hljs-title">IPlugin</span> </span>{
   pluginStore!: PluginStore;
+  namespace = <span class="hljs-string">"ShowAlert"</span>;
 
   getPluginName(): string {
     <span class="hljs-keyword">return</span> <span class="hljs-string">"ShowAlert@1.0.0"</span>;
@@ -86,19 +86,19 @@ yarn add react-pluggable
   }
 
   activate(): <span class="hljs-keyword">void</span> {
-    <span class="hljs-keyword">this</span>.pluginStore.addFunction(<span class="hljs-string">"ShowAlert.doIt"</span>, () =&gt; {
+    <span class="hljs-keyword">this</span>.pluginStore.addFunction(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.namespace}</span>.doIt`</span>, () =&gt; {
       alert(<span class="hljs-string">"Hello from the ShowAlert Plugin"</span>);
     });
   }
 
   deactivate(): <span class="hljs-keyword">void</span> {
-    <span class="hljs-keyword">this</span>.pluginStore.removeFunction(<span class="hljs-string">"ShowAlert.doIt"</span>);
+    <span class="hljs-keyword">this</span>.pluginStore.removeFunction(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.namespace}</span>.doIt`</span>);
   }
 }
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> ShowAlertPlugin;
 </code></pre>
-<p>Now add the ShowAlertPlugin to you app</p>
+<p>Now, let's add ShowAlertPlugin to our app.</p>
 <p>App.tsx</p>
 <pre><code class="hljs css language-jsx"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">"./App.css"</span>;
@@ -119,7 +119,7 @@ pluginStore.install(<span class="hljs-keyword">new</span> ShowAlertPlugin());
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App;
 </code></pre>
-<p>Now using that plugin in out Target Component.</p>
+<p>Using that plugin in our Component.</p>
 <p>Example.tsx</p>
 <pre><code class="hljs css language-jsx"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
 <span class="hljs-keyword">import</span> { usePluginStore } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-pluggable"</span>;
@@ -143,6 +143,6 @@ pluginStore.install(<span class="hljs-keyword">new</span> ShowAlertPlugin());
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Example;
 </code></pre>
-<h4><a class="anchor" aria-hidden="true" id="output"></a><a href="#output" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Output</h4>
+<p>ShowAlertPlugin will get injected into the component as shown</p>
 <p><img src="/docs/assets/gif/getting-started.gif" alt="Basic Example"></p>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-next button" href="/docs/installation"><span>Installation</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#installation">Installation</a></li><li><a href="#basic-example">Basic Example</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/homeIcon.png" alt="React Pluggable" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/introduction.html">Getting Started</a><a href="/docs/hello-world-example.html">Examples</a><a href="/docs/dependencies.html">Core Concepts</a><a href="/docs/api-ref.html">API References</a><a href="/docs/faq.html">FAQ</a></div><div><h5>Community</h5><a href="https://twitter.com/geekyants" target="_blank" rel="noreferrer noopener">Twitter</a><a href="https://stackoverflow.com/questions/tagged/react-pluggable" target="_blank" rel="noreferrer noopener">Stackoverflow</a><a href="https://discord.gg/6hSSRd5WzF" target="_blank" rel="noreferrer noopener">Discord</a></div><div><h5>More</h5><a href="https://github.com/GeekyAnts/react-pluggable">GitHub</a><a href="https://github.com/GeekyAnts/react-pluggable/blob/master/CONTRIBUTING.md" target="_blank">Contribution Guidelines<br/><br/></a><a class="github-button" href="https://github.com/GeekyAnts/react-pluggable" data-icon="octicon-star" data-count-href="https://github.com/GeekyAnts/react-pluggable" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div><div><a href="https://geekyants.com/" target="_blank" rel="noreferrer noopener">Built with ❤️ at GeekyAnts.</a></div></section><section class="copyright">Copyright © 2020 React Pluggable.</section></footer></div></body></html>
