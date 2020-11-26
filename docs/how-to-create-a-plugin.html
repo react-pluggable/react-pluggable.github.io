@@ -93,7 +93,7 @@
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> HelloWorldPlugin;
 </code></pre>
 <p><strong>Note</strong>: If we directly define the type of pluginStore variable as PluginStore class (i.e. public pluginStore: PluginStore; ) then it will throw an error because PluginStore class is not initialized in either constructor or class property declaration.</p>
-<p>For that, we can declare pluginStore in Plugin class as shown:</p>
+<p>In this case, we can declare pluginStore in Plugin class as shown:</p>
 <blockquote>
 <p>pluginStore! : PluginStore;</p>
 </blockquote>

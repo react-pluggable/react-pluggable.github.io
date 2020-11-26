@@ -80,17 +80,17 @@
 <p>(<em><code>void</code></em>)</p>
 <p><br/></p>
 <h2><a class="anchor" aria-hidden="true" id="getinstalledpluginnamewithversion"></a><a href="#getinstalledpluginnamewithversion" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getInstalledPluginNameWithVersion</h2>
-<p>It returns the name of the plugin if it exists or null if doesn't.</p>
+<p>It returns the name of the plugin if it exists or null otherwise.</p>
 <p><strong>Arguments</strong></p>
 <p>(<em><code>string</code></em>) : name of the plugin</p>
 <p><strong>Returns</strong></p>
 <p>(<em><code>string | null</code></em>): It returns the plugin name if exists or null</p>
 <p><br/></p>
 <h2><a class="anchor" aria-hidden="true" id="addfunction"></a><a href="#addfunction" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>addFunction</h2>
-<p>It is used to add function in the PluginStore.</p>
+<p>It is used to add a function in the PluginStore.</p>
 <p><strong>Arguments</strong></p>
 <ol>
-<li><em><code>key</code></em> (string):</li>
+<li><em><code>key</code></em> (string): name of the function.</li>
 <li><em><code>function</code></em>: Function definition which is to be added against the key.</li>
 </ol>
 <p><strong>Returns</strong></p>
@@ -100,14 +100,14 @@
 <p>It is used to execute the function stored in the PluginStore.</p>
 <p><strong>Arguments</strong></p>
 <ol>
-<li><em><code>key</code></em> (string): It represents the name of the function which we want to execute.</li>
+<li><em><code>key</code></em> (string): It represents the name of the function that we want to execute.</li>
 <li><em><code>...args</code></em> : arguments to be passed in the function parameters.</li>
 </ol>
 <p><strong>Returns</strong></p>
 <p>(<em><code>void</code></em>)</p>
 <p><br/></p>
 <h2><a class="anchor" aria-hidden="true" id="removefunction"></a><a href="#removefunction" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>removeFunction</h2>
-<p>It is used to remove the function from the PluginStore.</p>
+<p>It is used to remove a function from the PluginStore.</p>
 <p><strong>Arguments</strong></p>
 <p><em><code>key</code></em> (string): It represents the name of the function which is to be removed.</p>
 <p><strong>Returns</strong></p>
@@ -130,7 +130,7 @@
 <p><strong>Returns</strong></p>
 <p>(<em><code>void</code></em>)</p>
 <blockquote>
-<p>Note: It works the same as events in javascript i.e. we can store as many callbacks for a particular event. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation">event.stopPropagation</a>() and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault">event.preventDefault()</a> also works the same as they work in javascript.</p>
+<p>Note: It works the same as events in javascript i.e. we can store as many callbacks for a particular event. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation">event.stopPropagation</a>() and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault">event.preventDefault()</a> also work the same way in javascript.</p>
 </blockquote>
 <p><br/></p>
 <h2><a class="anchor" aria-hidden="true" id="removeeventlistener"></a><a href="#removeeventlistener" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>removeEventListener</h2>
