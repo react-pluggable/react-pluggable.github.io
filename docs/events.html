@@ -84,7 +84,9 @@
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> AuthPlugin;
 </code></pre>
+<blockquote>
 <p>Note: We have to import &quot;Event&quot; from &quot;react-pluggable&quot;,otherwise it will automatically get assigned Javascript's default Event class type, which doesn't work with plugins.</p>
+</blockquote>
 <p><a href="/docs/pluginstore#addeventlistener">addEventListener</a> is used to add a callback against a particular event and <a href="/docs/pluginstore#dispatchevent">dispatchEvent</a> is used to trigger an event.</p>
 <p>Dispatching event from the target component:</p>
 <p>Login.tsx</p>
