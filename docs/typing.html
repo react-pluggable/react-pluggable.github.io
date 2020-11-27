@@ -99,7 +99,7 @@
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> { PluginStoreClickMe };
 </code></pre>
 <ol start="2">
-<li>When building a complex app, we have many types exporting from each Plugin. So, it is difficult to import all the types repeatedly wherever we want to use pluginStore. So we create a type by combining all the plugins and use it as a single type as shown in the types.tsx.</li>
+<li>When building a complex app, we have many types of exporting from each Plugin. So, it is difficult to import all the types repeatedly wherever we want to use pluginStore. Instead, let us create a type by combining all the plugins and use it as a single type as shown in types.tsx.</li>
 </ol>
 <p>types.ts</p>
 <pre><code class="hljs css language-tsx">import { PluginStore } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-pluggable"</span>;
