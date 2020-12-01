@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://react-pluggable.github.io/blog</id>
-    <title>React Pluggable Blog</title>
+    <title>React Pluggable  Blog</title>
     <updated>2017-10-24T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://react-pluggable.github.io/blog"/>
-    <subtitle>The best place to stay up-to-date with the latest React Pluggable news and events.</subtitle>
+    <subtitle>The best place to stay up-to-date with the latest React Pluggable  news and events.</subtitle>
     <logo>https://react-pluggable.github.io/img/homeIcon.png</logo>
     <rights>Copyright © 2020 React Pluggable.</rights>
     <entry>
