@@ -1,0 +1,28 @@
+{
+  "docs": {
+    "Getting Started": ["introduction", "installation", "motivation"],
+    "Examples": [
+      "hello-world-example",
+      "renderer-example",
+      "event-example",
+      "typing-example",
+      "todo-example"
+    ],
+    "Core Concepts": [
+      "dependencies",
+      "typing",
+      "how-to-create-a-plugin",
+      "events"
+    ],
+    "Api References": [
+      "api-ref",
+      "plugin",
+      "iplugin",
+      "pluginstore",
+      "rendererplugin"
+    ],
+    "Tips and Tricks": ["naming-convention"],
+    "FAQ": ["faq"]
+  },
+  "docs-other": {}
+}
